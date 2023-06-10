@@ -2,42 +2,37 @@ package com.solvd.laba.dao;
 
 import com.solvd.laba.connectionPool.ConnectionPool;
 import com.solvd.laba.model.Address;
+import com.solvd.laba.model.Email;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AddressDao implements IDao<Address> {
-    Logger addressLogger = LogManager.getLogger();
+public class EmailDao implements IDao<Email> {
+    Logger emailLogger = LogManager.getLogger();
     private ConnectionPool connectionPool;
 
-    public AddressDao() throws SQLException {
+    public EmailDao() {}
 
-    }
-
-    public AddressDao(ConnectionPool connectionPool) throws SQLException {
+    public EmailDao(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
     @Override
-    public void create(Address address) throws SQLException, InterruptedException {
+    public void create(Email email) throws SQLException, InterruptedException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO address (id, country, city, street, building) VALUES (?, ?, ?, ?, ?)");
-            statement.setInt(1, address.getId());
-            statement.setString(2, address.getCountry());
-            statement.setString(3, address.getCity());
-            statement.setString(4, address.getStreet());
-            statement.setInt(5, address.getBuilding());
+                    "INSERT INTO email (id, email) VALUES (?, ?)");
+            statement.setInt(1, email.getId());
+            statement.setString(2, email.getEmail());
             statement.executeUpdate();
         } catch (SQLException | InterruptedException e) {
-            addressLogger.error(e);
+            emailLogger.error(e);
         } finally {
             if (connection != null) {
                 connectionPool.releaseConnection(connection);
@@ -46,15 +41,15 @@ public class AddressDao implements IDao<Address> {
     }
 
     @Override
-    public void delete(Integer addressId) throws SQLException {
+    public void delete(Integer id) throws SQLException {
         Connection connection = null;
         try{
             connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM address WHERE id = ?");
-            statement.setInt(1, addressId);
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM email WHERE id = ?");
+            statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException | InterruptedException e) {
-            addressLogger.error(e);
+            emailLogger.error(e);
         } finally {
             if (connection != null) {
                 connectionPool.releaseConnection(connection);
@@ -63,20 +58,16 @@ public class AddressDao implements IDao<Address> {
     }
 
     @Override
-    public void update(Address address) throws SQLException {
+    public void update(Email email) throws SQLException {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE address SET country = ?, city = ?, street = ?, building = ? WHERE id = ?");
-            statement.setString(1, address.getCountry());
-            statement.setString(2, address.getCity());
-            statement.setString(3, address.getStreet());
-            statement.setInt(4, address.getBuilding());
-            statement.setInt(5, address.getId());
+            PreparedStatement statement = connection.prepareStatement("UPDATE email SET email = ? WHERE id = ?");
+            statement.setString(1, email.getEmail());
+            statement.setInt(2, email.getId());
             statement.executeUpdate();
         } catch (SQLException | InterruptedException e) {
-            addressLogger.error(e);
+            emailLogger.error(e);
         } finally {
             if (connection != null) {
                 connectionPool.releaseConnection(connection);
@@ -85,30 +76,27 @@ public class AddressDao implements IDao<Address> {
     }
 
     @Override
-    public Address getById(Integer addressId) throws SQLException {
-        Address address = null;
+    public Email getById(Integer id) throws SQLException {
+        Email email = null;
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM address WHERE id = ?");
-            statement.setInt(1, addressId);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM email WHERE id = ?");
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                address = new Address(
+                email = new Email(
                         resultSet.getInt("id"),
-                        resultSet.getString("country"),
-                        resultSet.getString("city"),
-                        resultSet.getString("street"),
-                        resultSet.getInt("building")
+                        resultSet.getString("email")
                 );
             }
         } catch (SQLException | InterruptedException e) {
-            addressLogger.error(e);
+            emailLogger.error(e);
         } finally {
             if (connection != null) {
                 connectionPool.releaseConnection(connection);
             }
         }
-        return address;
+        return email;
     }
 }
