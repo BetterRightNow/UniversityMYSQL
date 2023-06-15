@@ -1,19 +1,22 @@
 package com.solvd.laba.connectionPool;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Semaphore;
+
+import static org.apache.logging.log4j.core.net.UrlConnectionFactory.createConnection;
 
 public class ConnectionPool {
     private BlockingQueue<Connection> connections; // Queue to hold the available connections
     private Semaphore semaphore; // Semaphore to control access to connections
     private int poolSize; // Maximum number of connections in the pool
-    private static final String URL = "jdbc:mysql://localhost:3306/UniversityJava";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "P6u#jDWk6b6Msz#7";
+    private static final String PROPERTY_FILE_PATH = "src/main/resources/connection.properties";
 
     private static class ConnectionPoolHolder {
         static final ConnectionPool INSTANCE = new ConnectionPool();
@@ -28,7 +31,22 @@ public class ConnectionPool {
         this.connections = new ArrayBlockingQueue<>(poolSize); // Initialize the blocking queue with the specified pool size
         semaphore = new Semaphore(poolSize); // Initialize the semaphore with the specified pool size
         for (int i = 0; i < poolSize; i++) {
-            connections.add(DriverManager.getConnection(URL, USERNAME, PASSWORD)); // Add connections to the queue
+            connections.add(createConnection()); // Add connections to the queue
+        }
+    }
+
+    private Connection createConnection() throws SQLException {
+        try (FileInputStream fis = new FileInputStream(PROPERTY_FILE_PATH)) {
+            Properties properties = new Properties();
+            properties.load(fis);
+
+            String url = properties.getProperty("db.url");
+            String username = properties.getProperty("db.username");
+            String password = properties.getProperty("db.password");
+
+            return DriverManager.getConnection(url, username, password);
+        } catch (IOException e) {
+            throw new SQLException("Failed to load connection properties: " + e.getMessage());
         }
     }
 
@@ -40,7 +58,7 @@ public class ConnectionPool {
         semaphore.acquire(); // Acquire a permit from the semaphore
         Connection connection = connections.poll(); // Get a connection from the queue
         if (connection == null) {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD); // Create a new connection if the queue is empty
+            connection = createConnection(); // Create a new connection if the queue is empty
         }
         return connection;
     }
