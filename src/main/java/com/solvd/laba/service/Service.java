@@ -1,12 +1,8 @@
 package com.solvd.laba.service;
 
 import com.solvd.laba.connectionPool.ConnectionPool;
-import com.solvd.laba.dao.AddressDao;
-import com.solvd.laba.dao.DateOfBirthDao;
-import com.solvd.laba.dao.EmailDao;
-import com.solvd.laba.model.Address;
-import com.solvd.laba.model.DateOfBirth;
-import com.solvd.laba.model.Email;
+import com.solvd.laba.dao.*;
+import com.solvd.laba.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +20,12 @@ public class Service {
         AddressDao addressDao = new AddressDao(connectionPool);
         DateOfBirthDao dateOfBirthDao = new DateOfBirthDao(connectionPool);
         EmailDao emailDao = new EmailDao(connectionPool);
+        FacultyDao facultyDao = new FacultyDao(connectionPool);
+        StudentSchedulesDao studentSchedulesDao = new StudentSchedulesDao(connectionPool);
+        StudentsDao studentsDao = new StudentsDao(connectionPool);
+        StudentRankingsDao studentRankingsDao = new StudentRankingsDao(connectionPool);
+        CoursesDao coursesDao = new CoursesDao(connectionPool);
+        SubjectsDao subjectsDao = new SubjectsDao(connectionPool);
         int numTasks = 7;
         ExecutorService executorService = Executors.newFixedThreadPool(numTasks);
         executorService.execute(() -> {
@@ -85,8 +87,34 @@ public class Service {
 
                 Email email4 = new Email(2, "informF@university.com");
                 emailDao.update(email4);
-                logger.info("Task " + 116 + " - Email updated successfully.");
+                logger.info("Task " + 16 + " - Email updated successfully.");
 
+                Faculties faculty1 = new Faculties(1, "Informatics", 2);
+                facultyDao.create(faculty1);
+                logger.info("Task " + 17 + " - Faculty created successfully.");
+
+                StudentSchedules studentSchedule = new StudentSchedules(1, "Monday", 303);
+                studentSchedulesDao.create(studentSchedule);
+                logger.info("Task " + 18 + " - Student schedule created successfully.");
+
+                Students student1 = new Students(1, "Alex", "Nazarevich",
+                        1, 1, 1, 1, 1);
+                studentsDao.create(student1);
+                logger.info("Task " + 19 + " - Student created successfully.");
+
+                java.util.Date utilRankingDate = dateFormat.parse("2023-04-07");
+                Date sqlRankingDate = new Date(utilRankingDate.getTime());
+                StudentRankings studentRanking1 = new StudentRankings(1, 1, sqlRankingDate, 1);
+                studentRankingsDao.create(studentRanking1);
+                logger.info("Task " + 20 + " - Student ranking created successfully.");
+
+                Courses course1 = new Courses(1, "Test automation", 1);
+                coursesDao.create(course1);
+                logger.info("Task " + 21 + " - Course created successfully.");
+
+                Subjects subject1 = new Subjects(1, "Java", 1, 1);
+                subjectsDao.create(subject1);
+                logger.info("Task " + 22 + " - Subject created successfully.");
 
             } catch (SQLException | InterruptedException | ParseException e) {
                 logger.error("Error occurred while working with database " + e.getMessage());

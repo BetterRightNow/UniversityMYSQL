@@ -10,13 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class facultyDao implements IDao<Faculties> {
+public class FacultyDao implements IDao<Faculties> {
     Logger facultyLogger = LogManager.getLogger();
     private ConnectionPool connectionPool;
 
-    public facultyDao() {}
+    public FacultyDao() {}
 
-    public facultyDao(ConnectionPool connectionPool) {
+    public FacultyDao(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
