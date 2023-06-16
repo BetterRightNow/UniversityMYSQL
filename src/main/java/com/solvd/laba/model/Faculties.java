@@ -37,4 +37,13 @@ public class Faculties {
     public void setEmailId(int emailId) {
         this.emailId = emailId;
     }
+
+    @Override
+    public String toString() {
+        return "Faculties{" +
+                "id=" + id +
+                ", facultyName='" + facultyName + '\'' +
+                ", emailId=" + emailId +
+                '}';
+    }
 }

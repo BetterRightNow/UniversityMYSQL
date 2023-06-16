@@ -36,4 +36,13 @@ public class Courses {
     public void setFacultiesId(int facultiesId) {
         this.facultiesId = facultiesId;
     }
+
+    @Override
+    public String toString() {
+        return "Courses{" +
+                "id=" + id +
+                ", courseName='" + courseName + '\'' +
+                ", facultiesId=" + facultiesId +
+                '}';
+    }
 }

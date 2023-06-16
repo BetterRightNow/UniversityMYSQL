@@ -48,4 +48,14 @@ public class StudentRankings {
     public void setStudentsId(int studentsId) {
         this.studentsId = studentsId;
     }
+
+    @Override
+    public String toString() {
+        return "StudentRankings{" +
+                "id=" + id +
+                ", ranking=" + ranking +
+                ", rankingDate=" + rankingDate +
+                ", studentsId=" + studentsId +
+                '}';
+    }
 }

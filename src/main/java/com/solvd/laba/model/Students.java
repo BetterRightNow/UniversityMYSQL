@@ -87,4 +87,18 @@ public class Students {
     public void setStudentSchedulesId(int studentSchedulesId) {
         this.studentSchedulesId = studentSchedulesId;
     }
+
+    @Override
+    public String toString() {
+        return "Students{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirthId=" + dateOfBirthId +
+                ", addressId=" + addressId +
+                ", facultiesId=" + facultiesId +
+                ", emailId=" + emailId +
+                ", studentSchedulesId=" + studentSchedulesId +
+                '}';
+    }
 }

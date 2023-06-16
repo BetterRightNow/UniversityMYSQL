@@ -29,4 +29,12 @@ public class DateOfBirth {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    @Override
+    public String toString() {
+        return "DateOfBirth{" +
+                "id=" + id +
+                ", dateOfBirth=" + dateOfBirth +
+                '}';
+    }
 }

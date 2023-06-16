@@ -36,4 +36,13 @@ public class StudentSchedules {
     public void setRoom(int room) {
         this.room = room;
     }
+
+    @Override
+    public String toString() {
+        return "StudentSchedules{" +
+                "id=" + id +
+                ", dayOfWeek='" + dayOfWeek + '\'' +
+                ", room=" + room +
+                '}';
+    }
 }

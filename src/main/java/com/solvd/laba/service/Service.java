@@ -116,6 +116,8 @@ public class Service {
                 subjectsDao.create(subject1);
                 logger.info("Task " + 22 + " - Subject created successfully.");
 
+                studentsDao.returnStudentsInfo(1);
+
             } catch (SQLException | InterruptedException | ParseException e) {
                 logger.error("Error occurred while working with database " + e.getMessage());
             }
