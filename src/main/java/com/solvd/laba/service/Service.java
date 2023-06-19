@@ -5,13 +5,14 @@ import com.solvd.laba.dao.*;
 import com.solvd.laba.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 public class Service {
     public static void main(String[] args) throws SQLException {
@@ -116,7 +117,27 @@ public class Service {
                 subjectsDao.create(subject1);
                 logger.info("Task " + 22 + " - Subject created successfully.");
 
+                logger.info("\n");
+                logger.info("running returnStudentsInfo joining all tables\n");
                 studentsDao.returnStudentsInfo(1);
+
+                logger.info("\n");
+                logger.info("running SAX parser\n");
+                try {
+                    SAXParserFactory factory = SAXParserFactory.newInstance();
+                    factory.setValidating(true);
+                    factory.setNamespaceAware(true);
+                    SAXParser parser = factory.newSAXParser();
+
+                    XMLHandler handler = new XMLHandler();
+                    parser.parse("src/main/resources/university.xml", handler);
+
+                    String xmlPath = "src/main/resources/university.xml";
+                    String xsdPath = "src/main/resources/schema.xsd";
+                    XMLValidator.validate(xmlPath, xsdPath);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             } catch (SQLException | InterruptedException | ParseException e) {
                 logger.error("Error occurred while working with database " + e.getMessage());

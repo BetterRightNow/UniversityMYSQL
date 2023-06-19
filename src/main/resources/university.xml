@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <DateOfBirth>
+        <id>1</id>
+        <dateOfBirth>1990-08-22</dateOfBirth>
+    </DateOfBirth>
+
+    <Address>
+        <id>1</id>
+        <country>Poland</country>
+        <city>Warsaw</city>
+        <street>Andersa</street>
+        <building>123</building>
+    </Address>
+
+    <Email>
+        <id>1</id>
+        <email>piotr@gmail.com</email>
+    </Email>
+
+    <Faculties>
+        <id>1</id>
+        <facultyName>Informatics</facultyName>
+        <emailId>1</emailId>
+    </Faculties>
+
+    <StudentSchedules>
+        <id>1</id>
+        <dayOfWeek>Monday</dayOfWeek>
+        <room>101</room>
+    </StudentSchedules>
+</root>
