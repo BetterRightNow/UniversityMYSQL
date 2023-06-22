@@ -1,5 +1,7 @@
 package com.solvd.laba.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+
 public class Email {
     private int id;
     private String email;
@@ -10,7 +12,7 @@ public class Email {
         this.id = id;
         this.email = email;
     }
-
+    @XmlElement
     public int getId() {
         return id;
     }
@@ -18,7 +20,7 @@ public class Email {
     public void setId(int id) {
         this.id = id;
     }
-
+    @XmlElement
     public String getEmail() {
         return email;
     }

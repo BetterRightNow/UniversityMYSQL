@@ -3,16 +3,23 @@ package com.solvd.laba.service;
 import com.solvd.laba.connectionPool.ConnectionPool;
 import com.solvd.laba.dao.*;
 import com.solvd.laba.model.*;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
 
 public class Service {
     public static void main(String[] args) throws SQLException {
@@ -136,6 +143,58 @@ public class Service {
                     String xsdPath = "src/main/resources/schema.xsd";
                     XMLValidator.validate(xmlPath, xsdPath);
                 } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                logger.info("\n");
+                logger.info("Working with Jaxb\n");
+                try{
+                    File xmlFile = new File("src/main/resources/university.xml");
+
+                    JAXBContext jaxbContext = JAXBContext.newInstance(Root.class);
+                    Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+                    Root root = (Root) unmarshaller.unmarshal(xmlFile);
+
+                    // Access the parsed objects and perform desired operations
+
+                    List<Address> addressList = root.getAddressList();
+                    List<Email> emailList = root.getEmailList();
+                    List<Faculties> facultiesList = root.getFacultiesList();
+                    List<StudentSchedules> studentSchedulesList = root.getStudentSchedulesList();
+
+                    logger.info("Address:");
+                    for (Address addres : addressList) {
+                        logger.info("ID: " + addres.getId());
+                        logger.info("Country: " + addres.getCountry());
+                        logger.info("City: " + addres.getCity());
+                        logger.info("Street: " + addres.getStreet());
+                        logger.info("Building: " + addres.getBuilding());
+                        logger.info("---------------");
+                    }
+
+                    logger.info("Email:");
+                    for (Email email : emailList) {
+                        logger.info("Id: " + email.getId());
+                        logger.info("Email" + email.getEmail());
+                        logger.info("---------------");
+                    }
+
+                    logger.info("Faculties:");
+                    for (Faculties faculties: facultiesList) {
+                        logger.info("Id% " + faculties.getId());
+                        logger.info("FacultyName: " + faculties.getFacultyName());
+                        logger.info("EmailId: " + faculties.getEmailId());
+                        logger.info("---------------");
+                    }
+
+                    logger.info("Student Schedule: ");
+                    for (StudentSchedules studentSchedules: studentSchedulesList) {
+                        logger.info("Id: " + studentSchedules.getId());
+                        logger.info("Day of week: " + studentSchedules.getDayOfWeek());
+                        logger.info("Room: " + studentSchedules.getRoom());
+                        logger.info("---------------");
+                    }
+                } catch (JAXBException e) {
                     e.printStackTrace();
                 }
 

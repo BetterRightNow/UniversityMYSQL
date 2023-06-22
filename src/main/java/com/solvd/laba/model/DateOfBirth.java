@@ -1,5 +1,7 @@
 package com.solvd.laba.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+
 import java.sql.Date;
 
 public class DateOfBirth {
@@ -13,7 +15,7 @@ public class DateOfBirth {
         this.id = id;
         this.dateOfBirth = dateOfBirth;
     }
-
+    @XmlElement
     public int getId() {
         return id;
     }
@@ -21,7 +23,7 @@ public class DateOfBirth {
     public void setId(int id) {
         this.id = id;
     }
-
+    @XmlElement
     public Date getDateOfBirth() {
         return dateOfBirth;
     }

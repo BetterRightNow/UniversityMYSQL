@@ -1,5 +1,7 @@
 package com.solvd.laba.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+
 public class Faculties {
     private int id;
     private String facultyName;
@@ -13,7 +15,7 @@ public class Faculties {
         this.facultyName = facultyName;
         this.emailId = emailId;
     }
-
+    @XmlElement
     public int getId() {
         return id;
     }
@@ -21,7 +23,7 @@ public class Faculties {
     public void setId(int id) {
         this.id = id;
     }
-
+    @XmlElement
     public String getFacultyName() {
         return facultyName;
     }
@@ -29,7 +31,7 @@ public class Faculties {
     public void setFacultyName(String facultyName) {
         this.facultyName = facultyName;
     }
-
+    @XmlElement
     public int getEmailId() {
         return emailId;
     }

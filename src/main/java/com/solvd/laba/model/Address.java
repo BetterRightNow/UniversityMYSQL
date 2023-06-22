@@ -1,5 +1,7 @@
 package com.solvd.laba.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+
 public class Address {
     private int id;
     private String country;
@@ -24,7 +26,7 @@ public class Address {
         this.street = street;
         this.building = building;
     }
-
+    @XmlElement
     public int getId() {
         return id;
     }
@@ -32,7 +34,7 @@ public class Address {
     public void setId(int id) {
         this.id = id;
     }
-
+    @XmlElement
     public String getCountry() {
         return country;
     }
@@ -40,7 +42,7 @@ public class Address {
     public void setCountry(String country) {
         this.country = country;
     }
-
+    @XmlElement
     public String getCity() {
         return city;
     }
@@ -48,7 +50,7 @@ public class Address {
     public void setCity(String city) {
         this.city = city;
     }
-
+    @XmlElement
     public String getStreet() {
         return street;
     }
@@ -56,7 +58,7 @@ public class Address {
     public void setStreet(String street) {
         this.street = street;
     }
-
+    @XmlElement
     public int getBuilding() {
         return building;
     }

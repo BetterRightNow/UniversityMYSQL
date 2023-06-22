@@ -1,5 +1,7 @@
 package com.solvd.laba.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+
 public class StudentSchedules {
     private int id;
     private String dayOfWeek;
@@ -12,7 +14,7 @@ public class StudentSchedules {
         this.dayOfWeek = dayOfWeek;
         this.room = room;
     }
-
+    @XmlElement
     public int getId() {
         return id;
     }
@@ -20,7 +22,7 @@ public class StudentSchedules {
     public void setId(int id) {
         this.id = id;
     }
-
+    @XmlElement
     public String getDayOfWeek() {
         return dayOfWeek;
     }
@@ -28,7 +30,7 @@ public class StudentSchedules {
     public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
-
+    @XmlElement
     public int getRoom() {
         return room;
     }
