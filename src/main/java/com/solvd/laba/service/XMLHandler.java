@@ -31,7 +31,7 @@ public class XMLHandler extends DefaultHandler {
 
     @Override
     public void error(SAXParseException e) throws SAXException {
-        saxlogger.error("Error: " + e.getMessage());
+
     }
 
     @Override
