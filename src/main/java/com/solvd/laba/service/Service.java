@@ -198,6 +198,9 @@ public class Service {
                     e.printStackTrace();
                 }
 
+                logger.info("\n");
+                JsonFileCreator.createJsonFile();
+
             } catch (SQLException | InterruptedException | ParseException e) {
                 logger.error("Error occurred while working with database " + e.getMessage());
             }
