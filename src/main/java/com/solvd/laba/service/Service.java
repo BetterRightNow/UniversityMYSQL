@@ -199,7 +199,9 @@ public class Service {
                 }
 
                 logger.info("\n");
+                logger.info("Working with Json\n");
                 JsonFileCreator.createJsonFile();
+                JsonParser.readJsonFile();
 
             } catch (SQLException | InterruptedException | ParseException e) {
                 logger.error("Error occurred while working with database " + e.getMessage());
