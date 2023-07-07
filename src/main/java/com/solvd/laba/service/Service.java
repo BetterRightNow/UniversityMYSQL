@@ -6,10 +6,17 @@ import com.solvd.laba.model.*;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
+import mappers.IEmailMapper;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -202,6 +209,17 @@ public class Service {
                 logger.info("Working with Json\n");
                 JsonFileCreator.createJsonFile();
                 JsonParser.readJsonFile();
+
+                logger.info("\n");
+                logger.info("Working with Mybatis\n");
+                try (Reader reader = Resources.getResourceAsReader("mybatis-config.xml")) {
+                    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+                    SqlSession sqlSession = sqlSessionFactory.openSession();
+                    IEmailMapper iEmailMapper = sqlSession.getMapper(IEmailMapper.class);
+                    logger.info(iEmailMapper.getById(1));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
             } catch (SQLException | InterruptedException | ParseException e) {
                 logger.error("Error occurred while working with database " + e.getMessage());
