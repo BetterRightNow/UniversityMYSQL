@@ -221,8 +221,31 @@ public class Service {
                     throw new RuntimeException(e);
                 }
 
+                logger.info("\n");
+                logger.info("Working with solid\n");
+                SolidFactory solidFactory = new SolidFactory();
+                StudentSchedules solidSchedule = solidFactory.createSolid(StudentSchedules.class);
+                solidSchedule.setId(2);
+                solidSchedule.setRoom(303);
+                solidSchedule.setDayOfWeek("Friday");
+                logger.info(solidSchedule);
+
+                Professors solidProfessor = new Professors.Builder()
+                        .id(1)
+                        .firstName("John")
+                        .lastName("Doe")
+                        .dateOfBirthId(123)
+                        .emailId(456)
+                        .facultiesId(789)
+                        .build();
+                logger.info(solidProfessor);
+
             } catch (SQLException | InterruptedException | ParseException e) {
                 logger.error("Error occurred while working with database " + e.getMessage());
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
             }
         });
         executorService.shutdown();
